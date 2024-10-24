@@ -1,0 +1,6 @@
+*
+__pycache__
+FashionMNIST
+!dataset_loader.py
+!.gitkeep
+!.gitignore
