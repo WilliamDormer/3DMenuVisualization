@@ -1,8 +1,8 @@
 import torch
 import yaml
 import argparse
-# from models.model1 import Model1
-from models.examplemodel import Model1, GarmentClassifier
+import importlib
+from pathlib import Path
 from data.dataset_loader import get_dataloader
 from torch import nn, optim
 from utils.logger import Logger
@@ -42,10 +42,14 @@ def train(model, dataloader, criterion, optimizer, epochs, logger, device):
         print(f'Epoch {epoch+1}/{epochs}, Loss: {loss.item()}')
 
         #TODO compute the validation loss as well, use it for early stopping. 
-
-
-
     logger.save_logs()
+
+
+def get_model(model_class_name: str) -> nn.Module:
+    """Dynamically import the Pytorch model `model_class_name` from the file `model_class_name.py`"""
+    mod = importlib.import_module(f"models.{model_class_name.lower()}")
+    cls = getattr(mod, model_class_name)
+    return cls
 
 if __name__ == "__main__":
     # Command line arguments for config file path
@@ -53,31 +57,34 @@ if __name__ == "__main__":
     parser.add_argument("--config", type=str, help="Path to config file", required=True)
     args = parser.parse_args()
 
-    # Load config
-    with open(args.config, 'r') as file:
-        config = yaml.safe_load(file)
-
-    # TODO modify this to select the model based on config file
-    # TODO modify this to select dataloader based on config file
-    # TODO modify this to select optimizer based on config file
-    # TODO modify this to select criterion based on config file
-
-    print("torch.version.cuda: ", torch.version.cuda)
-
     # https://www.geeksforgeeks.org/how-to-use-gpu-acceleration-in-pytorch/
     if torch.cuda.is_available():
         device = torch.device("cuda")
         print("CUDA is available. Using GPU.")
+        print("torch.version.cuda: ", torch.version.cuda)
     else:
         device = torch.device("cpu")
         print("CUDA is not available. Using CPU. This is not ideal for training, so please check torch version!")
-        raise Exception("using wrong device (cpu instead of GPU)")
+        # raise Exception("using wrong device (cpu instead of GPU)")
 
 
-    # Model, dataloader, optimizer, criterion
-    model = GarmentClassifier()
+    # --- Model, dataloader, optimizer, criterion
+
+    # Load config
+    with open(args.config, 'r') as file:
+        config = yaml.safe_load(file)
+
+    # -- Initialize Model
+    model = get_model(config["model"]["name"])()
+    print(f"Training model {model}")
+
+    # TODO modify this to select dataloader based on config file
+    # TODO modify this to select optimizer based on config file
+    # TODO modify this to select criterion based on config file
+
     # send the model to the device
     model = model.to(device)
+
     # model = Model1(config['model']['input_dim'], config['model']['output_dim'])
     dataloader = get_dataloader(dataset_identifier=None, data_path=config['dataset']['path'], batch_size=config['training']['batch_size'])
     optimizer = optim.Adam(model.parameters(), lr=config['training']['learning_rate'])

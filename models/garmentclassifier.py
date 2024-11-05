@@ -2,14 +2,6 @@
 
 import torch.nn as nn
 import torch.nn.functional as F
-
-class Model1(nn.Module):
-    def __init__(self, input_dim, output_dim):
-        super(Model1, self).__init__()
-        self.fc = nn.Linear(input_dim, output_dim)
-
-    def forward(self, x):
-        return self.fc(x)
     
 class GarmentClassifier(nn.Module):
     def __init__(self):
@@ -20,6 +12,7 @@ class GarmentClassifier(nn.Module):
         self.fc1 = nn.Linear(16 * 4 * 4, 120)
         self.fc2 = nn.Linear(120, 84)
         self.fc3 = nn.Linear(84, 10)
+        
     def forward(self, x):
         x = self.pool(F.relu(self.conv1(x)))
         x = self.pool(F.relu(self.conv2(x)))
