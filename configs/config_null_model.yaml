@@ -1,0 +1,4 @@
+model:
+  name: null_model
+training:
+  name: "World"

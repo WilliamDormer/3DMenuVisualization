@@ -52,8 +52,9 @@ def get_model(model_class_name: str) -> nn.Module:
     cls = getattr(mod, model_class_name)
     return cls
 
-if __name__ == "__main__":
-    # Command line arguments for config file path
+
+def main() -> None:
+# Command line arguments for config file path
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", type=str, help="Path to config file", required=True)
     args = parser.parse_args()
@@ -105,3 +106,7 @@ if __name__ == "__main__":
 
     # TODO enforce that the user has all the requirements in requirements.txt
     # TODO add support for loading model parameters, for either continued training in the case of a break, or for evaluation.
+
+
+if __name__ == "__main__":
+    main()
