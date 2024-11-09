@@ -5,13 +5,42 @@ import importlib
 from pathlib import Path
 from data.dataset_loader import get_dataloader
 from torch import nn, optim
+from torch.utils.data import DataLoader
 from utils.logger import Logger
 from torch.utils.tensorboard import SummaryWriter
-from garmentclassifier import GarmentClassifier
+from models.garment_classifier.model import GarmentClassifier
+from argparse import ArgumentParser
+from utils import TrainingArgs
+from .model import GarmentClassifier # Need relative import
+import torchvision.transforms as transforms
+import torchvision
+
+def setup(parent_args: list[str]) -> TrainingArgs:
+    parser = ArgumentParser()
+    parser.add_argument("--epochs", type=int, default=2)
+    parser.add_argument("--batch_size", type=int, required=True)
+    parser.add_argument("--learning_rate", type=float, required=True)
+    return TrainingArgs(parser.parse_args(parent_args))
+
+def get_data_loader(data_path: Path, training: TrainingArgs) -> DataLoader:
+    """The parent importer sets the data_path"""
+    transform = transforms.Compose(
+        [transforms.ToTensor(),
+        transforms.Normalize((0.5,), (0.5,))]
+    )
+
+    dataset = torchvision.datasets.FashionMNIST(data_path, train=True, transform=transform, download=True)
+    return DataLoader(dataset, batch_size=training.args.batch_size, shuffle=True)
 
 # example: https://pytorch.org/tutorials/beginner/introyt/trainingyt.html
+def train(training: TrainingArgs, writer: SummaryWriter, dataloader: DataLoader, device: str) -> None:
+    epochs: int = training.args.epochs
+    learning_rate: float = training.args.learning_rate
 
-def train(model, dataloader, criterion, optimizer, epochs, logger, device):
+    model = GarmentClassifier()
+    optimizer = optim.Adam(model.parameters(), lr=learning_rate)
+    criterion = nn.CrossEntropyLoss()
+
     for epoch in range(epochs):
         running_loss = 0
         last_loss = 0
@@ -36,14 +65,14 @@ def train(model, dataloader, criterion, optimizer, epochs, logger, device):
                 last_loss = running_loss / 1000 # loss per batch over the last 1000 batches
                 print('  batch {} loss: {}'.format(i + 1, last_loss))
                 tb_x = epoch * len(dataloader) + i + 1
-                logger.log_scalar('batch loss/train', last_loss, tb_x)
+                writer.add_scalar('batch loss/train', last_loss, tb_x)
                 running_loss = 0.
         
-        logger.log_scalar('epoch last loss/train', loss.item(), epoch)
+        writer.add_scalar('epoch last loss/train', loss.item(), epoch)
         print(f'Epoch {epoch+1}/{epochs}, Loss: {loss.item()}')
 
         #TODO compute the validation loss as well, use it for early stopping. 
-    logger.save_logs()
+    writer.flush()
 
 
 def get_model(model_class_name: str) -> nn.Module:
@@ -51,7 +80,6 @@ def get_model(model_class_name: str) -> nn.Module:
     mod = importlib.import_module(f"models.{model_class_name.lower()}")
     cls = getattr(mod, model_class_name)
     return cls
-
 
 def main() -> None:
 # Command line arguments for config file path

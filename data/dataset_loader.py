@@ -18,7 +18,7 @@ import torchvision.transforms as transforms
 #             sample = self.transform(sample)
 #         return sample
 
-def get_dataloader(dataset_identifier,data_path, batch_size, shuffle=True):
+def get_dataloader(dataset_identifier, data_path, batch_size, shuffle=True):
     dataset = None
     if dataset_identifier == None:
         # then we pick the default example, FashionMNIST

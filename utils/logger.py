@@ -3,7 +3,6 @@ import os
 import yaml
 from torch.utils.tensorboard import SummaryWriter
 
-
 class Logger:
     def __init__(self, log_dir, config_path):
         '''

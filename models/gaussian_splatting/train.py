@@ -1,3 +1,8 @@
+"""train
+
+Annotated copy of Gaussian Splatting training file
+"""
+
 #
 # Copyright (C) 2023, Inria
 # GRAPHDECO research group, https://team.inria.fr/graphdeco
@@ -9,13 +14,13 @@
 # For inquiries contact  george.drettakis@inria.fr
 #
 
-# TODO - Remove network_gui code - we decided to focus on just generating the .ply files for now
+# TODO - Refactor to separate logging from training
 
 import os
 import torch
 from random import randint
 from utils.loss_utils import l1_loss, ssim
-from gaussian_renderer import render, network_gui
+from gaussian_renderer import render
 import sys
 from scene import Scene, GaussianModel
 from utils.general_utils import safe_state, get_expon_lr_func
@@ -73,21 +78,6 @@ def training(dataset: ModelParams, opt: OptimizationParams, pipe: PipelineParams
     progress_bar = tqdm(range(first_iter, opt.iterations), desc="Training progress")
     first_iter += 1
     for iteration in range(first_iter, opt.iterations + 1):
-        # if network_gui.conn == None:
-        #     network_gui.try_connect()
-        # while network_gui.conn != None:
-        #     try:
-        #         net_image_bytes = None
-        #         custom_cam, do_training, pipe.convert_SHs_python, pipe.compute_cov3D_python, keep_alive, scaling_modifer = network_gui.receive()
-        #         if custom_cam != None:
-        #             net_image = render(custom_cam, gaussians, pipe, background, scaling_modifier=scaling_modifer, use_trained_exp=dataset.train_test_exp, separate_sh=SPARSE_ADAM_AVAILABLE)["render"]
-        #             net_image_bytes = memoryview((torch.clamp(net_image, min=0, max=1.0) * 255).byte().permute(1, 2, 0).contiguous().cpu().numpy())
-        #         network_gui.send(net_image_bytes, dataset.source_path)
-        #         if do_training and ((iteration < int(opt.iterations)) or not keep_alive):
-        #             break
-        #     except Exception as e:
-        #         network_gui.conn = None
-
         iter_start.record()
 
         gaussians.update_learning_rate(iteration)
@@ -156,7 +146,7 @@ def training(dataset: ModelParams, opt: OptimizationParams, pipe: PipelineParams
             if iteration == opt.iterations:
                 progress_bar.close()
 
-            # Log and save
+            # Log and save - TODO: Make this accessible to parent script
             training_report(tb_writer, iteration, Ll1, loss, l1_loss, iter_start.elapsed_time(iter_end), testing_iterations, scene, render, (pipe, background, 1., SPARSE_ADAM_AVAILABLE, None, dataset.train_test_exp), dataset.train_test_exp)
             if (iteration in saving_iterations):
                 print("\n[ITER {}] Saving Gaussians".format(iteration))
@@ -277,16 +267,12 @@ def main() -> None:
 
     # Initialize system state (RNG)
     safe_state(args.quiet)
-
-    # Start GUI server, configure and run training
-    # if not args.disable_viewer:
-    #     network_gui.init(args.ip, args.port)
+    
     torch.autograd.set_detect_anomaly(args.detect_anomaly)
     training(lp.extract(args), op.extract(args), pp.extract(args), args.test_iterations, args.save_iterations, args.checkpoint_iterations, args.start_checkpoint, args.debug_from)
 
     # All done
     print("\nTraining complete.")
-
 
 if __name__ == "__main__":
     main()
