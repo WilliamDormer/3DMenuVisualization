@@ -1,0 +1,1 @@
+Namespace(sh_degree=3, source_path='/w/284/kappa/projects/3DMenuVisualization/data/tandt/truck', model_path='./output/16b3f85a-e', images='images', depths='', resolution=-1, white_background=False, train_test_exp=False, data_device='cuda', eval=False)

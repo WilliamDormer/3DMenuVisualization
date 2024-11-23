@@ -1,1 +1,1 @@
-simple_knn
+simple_knn_3dgs
