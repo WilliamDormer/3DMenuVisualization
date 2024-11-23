@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='plas',
+    name='plas_sogg',
     version='0.1',
     packages=find_packages(),
     install_requires=[
@@ -25,7 +25,7 @@ setup(
         'opencv-python',
 
         # eval/flas
-        'lap',
+        'lapx', # Originally had `lap` but `lap` was broken! Switched to `lapx`: https://pypi.org/project/lapx/, see https://github.com/gatagat/lap/issues/45
         'matplotlib',
         'scipy'
     ],
