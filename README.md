@@ -3,30 +3,75 @@
 This project aims to produce a deep learning model capable of quickly providing high-quality, interactive 3D menu items.
 
 
-## Problem
+```bash
+scp -r /w/246/kappa/projects/3DMenuVisualization/data/output/gaussian_splatting/croissant_sample . 
+```
 
-We need an easy way to train and evaluate many slightly different Novel-view synthesis models.
+## Workflow
 
-That is, the repo structure should enable us to:
+1. Mickell prepares MetaFood3D data
 
-- read input from a shared `data/` folder and pass it to models
-- write model outputs to a shared `data/` folder
-- log (with Tensorboard) any kind of model
+  1. Select a directory of food items
+  2. Run COLMAP to generate Structure-From-Motion points
+  3. `scp` the results to our repo's `data/input/meta_food_3d` folder
 
-- create models independently
-- create & swap components of models (optimizer, loss, layers, blocks, components) independently
-
-- train models independently
-- train models that require varying counts and kinds of arguments
-
-- evaluate models independently
-- evaluate models using a predefined set of metrics
-- produce rankings of model performance after evaluating a model
-
+2. We run our model on the input and generate the splatts
 
 ## Solution
 
-Use a template design pattern. The abstract components are:
+Structure model files like so:
+
+```text
+models/
+  <model>/
+    __init__.py
+    model.py
+    train.py
+```
+
+And have a main `train.py` script that:
+
+1. Takes config values, like training parameters, and feeds it to the `<model>/train.py` script
+2. Passes a logger to the `<model>/train.py` script
+3. Passes a dataloader to the `<model>/train.py` script
+
+Essentially, in `train.py`
+
+```python
+# train.py
+
+model = ... # import 'models/<model>'
+
+training_args = model.setup(config)
+
+data_loader = model.get_data_loader(config)
+# Alternatively: data.get_data_loader(config)
+
+logger = ... # e.g. tensorboard.SummaryWriter
+
+model.train(
+  training_args,
+  data_loader,
+  logger,
+)
+```
+
+Note that specific training components are hidden away as implementation details because they are typically specific to a model.
+E.g. the `model.train` function would have code for the loss function, optimizer, regularizers, etc. and is not dictated by the configuration file.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 1. Configuration loader - each model can have unique set of arguments
 2. Data loader - prepares the input data
@@ -36,10 +81,6 @@ Use a template design pattern. The abstract components are:
 6. Training
 7. Data Loader - save output
 8. Evaluation - compute metrics, save results, update rankings
-
-
-One issue:
-- If I delegate to using subprocess to call a model's train script, I lose context for the summary writer, unless I delegate to the model to create the summary writer
 
 
 ## Usage
@@ -67,18 +108,26 @@ The configuration specifies which model to run, which input data, where to log, 
 
 ```text
 models/
-  gaussian_splatting/
+  <model>/
     __init__.py
     model.py
     train.py
 ```
 
-where `train.py` is the main entry point. It should accept command line arguments:
+`train.py` should have the following functions:
 
-1. Corresponding to the keys and values in the `training` key of the configuration file.
-2. An additional argument for `--scene` - this is the input data
+```python
+# train.py
+def setup():
+  ...
 
-> For example, the `train.py` for `gaussian_splatting` should accept an argument called `--iterations` because that is what is specificed in the configuration file, and a `--scene` argument.
+def train():
+  ...
+```
+
+where `train.py` is the main entry point. The values of config[`training`]. 
+
+> For example, the `train.py` for `gaussian_splatting` should accept an argument called `--iterations` because that is what is specificed in the configuration file.
 
 3. Run the configuration
 
@@ -93,6 +142,25 @@ python eval.py --config ./configs/my_model_config.yaml
 ```
 
 ## Folder Structure
+
+
+We need an easy way to train and evaluate many slightly different Novel-view synthesis models.
+
+That is, the repo structure should enable us to:
+
+- read input from a shared `data/` folder and pass it to models
+- write model outputs to a shared `data/` folder
+- log (with Tensorboard) any kind of model
+
+- create models independently
+- create & swap components of models (optimizer, loss, layers, blocks, components) independently
+
+- train models independently
+- train models that require varying counts and kinds of arguments
+
+- evaluate models independently
+- evaluate models using a predefined set of metrics
+- produce rankings of model performance after evaluating a model
 
 `data/`
 this folder contains scripts to load and pre-process datasets. Use dataset_loader.py script to abstract the specifics of loading the different datasets.
@@ -119,3 +187,13 @@ This script can be used to evaluate a trained model on validation or test data.
 
 `requirements.txt`
 List all dependencies here, making the project easy to install and run on different environments. Refer to [https://docs.python.org/3/tutorial/venv.html](https://docs.python.org/3/tutorial/venv.html) for details.
+
+# Workflow
+
+```
+srun --partition=gpunodes -c 2 --mem=8G --gres=gpu:rtx_4090:1 -t 60 --pty bash --login
+```
+
+Detailed documentation for running with GPU:
+
+https://pyrite-pigment-7b7.notion.site/Tutorial-Gaussian-Splatting-133697eeb9a580dab39fd80af9e6cdda

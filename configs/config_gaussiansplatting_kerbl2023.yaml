@@ -1,9 +1,10 @@
 model:
   name: gaussian_splatting
-dataset:
-  path: ./data/
 logging:
-  path: ./experiments/GSplattKerbl
-
+  path: ./experiments/gaussian_splatting
+dataset:
+  path: ./data/input/meta_food_3d/croissant_sample
 training:
-  iterations: 50
+  iterations: 15000
+  source_path: ./data/input/meta_food_3d/croissant_5img
+  model_path: ./data/output/gaussian_splatting/croissant_5img

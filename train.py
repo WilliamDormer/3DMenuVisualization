@@ -1,106 +1,115 @@
-import torch
-import yaml
+"""train
+
+Main module for training models for 3D novel view synthesis.
+"""
 import argparse
-import importlib
 from pathlib import Path
-from data.dataset_loader import get_dataloader
-from torch import nn, optim
-from utils.logger import Logger
+from dataclasses import dataclass
+from typing import NamedTuple, Callable, Optional
+import importlib
+import yaml
+import torch
+from torch import nn
+from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
+from utils import TrainingArgs
 
-# example: https://pytorch.org/tutorials/beginner/introyt/trainingyt.html
+@dataclass
+class Args:
+    scene: Path
+    config: dict[str, any]
+    allow_cpu: bool
+    disable_logs: bool
 
-def train(model, dataloader, criterion, optimizer, epochs, logger, device):
-    for epoch in range(epochs):
-        running_loss = 0
-        last_loss = 0
-        for i, data in enumerate(dataloader):
-            # parse the input data and label information.
-            inputs, labels = data
-            inputs = inputs.to(device)
-            labels = labels.to(device)
-            # Zero your gradients for every batch.
-            optimizer.zero_grad()
-            # Make predictions for this batch
-            outputs = model(inputs)
-            # compute the loss and its gradients
-            loss = criterion(outputs, labels)
-            loss.backward()
-            # adjust learning weights
-            optimizer.step()
+class ModelImports(NamedTuple):
+    """Imported components from a model subpackage.
+    
+    Each model is defined as a subpackage found in the `models/` directory.
+    This class defines the interface that the subpackage should expose to the main training module.
+    """
+    model: nn.Module
+    # Accepts arguments, constructs argument parsers as needed, returns TrainingArgs
+    setup_func: Callable[[list[str]], TrainingArgs]
+    # Optimizer, Loss, Regularization, etc. are implementation details of the training function
+    train_func: Callable[[TrainingArgs, SummaryWriter, Optional[DataLoader], str], None]
+    data_loader: Callable[[Path], DataLoader]
 
-            # Gather running data and report
-            running_loss += loss.item()
-            if i % 1000 == 999:
-                last_loss = running_loss / 1000 # loss per batch over the last 1000 batches
-                print('  batch {} loss: {}'.format(i + 1, last_loss))
-                tb_x = epoch * len(dataloader) + i + 1
-                logger.log_scalar('batch loss/train', last_loss, tb_x)
-                running_loss = 0.
-        
-        logger.log_scalar('epoch last loss/train', loss.item(), epoch)
-        print(f'Epoch {epoch+1}/{epochs}, Loss: {loss.item()}')
+def import_model(model_name: str) -> ModelImports:
+    """Dynamically import ModelImports components from `model_name` subpackage"""
 
-        #TODO compute the validation loss as well, use it for early stopping. 
-    logger.save_logs()
+    module_name = f"models.{model_name.lower()}"
+    model_class_name = "".join(map(str.title, model_name.split("_")))
 
+    model_module = importlib.import_module(f"{module_name}.model")
+    train_module = importlib.import_module(f"{module_name}.train")
 
-def get_model(model_class_name: str) -> nn.Module:
-    """Dynamically import the Pytorch model `model_class_name` from the file `model_class_name.py`"""
-    mod = importlib.import_module(f"models.{model_class_name.lower()}")
-    cls = getattr(mod, model_class_name)
-    return cls
+    mi = ModelImports(
+        model=getattr(model_module, model_class_name),
+        setup_func=getattr(train_module, "setup"),
+        train_func=getattr(train_module, "train"),
+        data_loader=getattr(train_module, "get_data_loader"),
+    )
+    return mi
+
+def extract_args(config: dict) -> list[str]:
+    """Extracts and formats command line arguments from a configuration file"""
+    args: list[str] = []
+    for k, v in config["training"].items():
+        k = f"--{k}"
+        args.append(str(k))
+        args.append(str(v))
+    return args
 
 if __name__ == "__main__":
-    # Command line arguments for config file path
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", type=str, help="Path to config file", required=True)
-    args = parser.parse_args()
+    parser.add_argument("--config", type=str, help="Path to model config file", required=True)
+    parser.add_argument("--allow-cpu", action="store_true", help="Allow training with CPU")
+    args: Args = parser.parse_args()
 
-    # https://www.geeksforgeeks.org/how-to-use-gpu-acceleration-in-pytorch/
     if torch.cuda.is_available():
         device = torch.device("cuda")
-        print("CUDA is available. Using GPU.")
-        print("torch.version.cuda: ", torch.version.cuda)
+        print(f"CUDA (ver. {torch.version.cuda}) is available. Using GPU.")
     else:
         device = torch.device("cpu")
-        print("CUDA is not available. Using CPU. This is not ideal for training, so please check torch version!")
-        # raise Exception("using wrong device (cpu instead of GPU)")
+        if not args.allow_cpu:
+            raise Exception("Using wrong device CPU instead of GPU")
+        else:
+            print("CUDA is not available. Using CPU.")
+            print("This is not ideal for training, so please check torch version!")
 
-
-    # --- Model, dataloader, optimizer, criterion
-
-    # Load config
+    # Load model configuration file
     with open(args.config, 'r') as file:
-        config = yaml.safe_load(file)
+        config: dict = yaml.safe_load(file)
 
-    # -- Initialize Model
-    model = get_model(config["model"]["name"])()
-    print(f"Training model {model}")
+    args = extract_args(config)
 
-    # TODO modify this to select dataloader based on config file
-    # TODO modify this to select optimizer based on config file
-    # TODO modify this to select criterion based on config file
+    # Import model code into parent context
+    model_name = config["model"]["name"]
+    model_interface = import_model(model_name)
 
-    # send the model to the device
-    model = model.to(device)
+    # Call setup
+    training_args = model_interface.setup_func(args)
 
-    # model = Model1(config['model']['input_dim'], config['model']['output_dim'])
-    dataloader = get_dataloader(dataset_identifier=None, data_path=config['dataset']['path'], batch_size=config['training']['batch_size'])
-    optimizer = optim.Adam(model.parameters(), lr=config['training']['learning_rate'])
-    criterion = nn.CrossEntropyLoss()
+    data_loader = None
+    try:
+        data_loader = model_interface.data_loader(config["dataset"]["path"], training_args)
+    except KeyError as err:
+        print(err)
 
-    # Logging
-    logger = Logger(log_dir=f"experiments/", config_path=args.config)
-    
-    # Train
-    train(model, dataloader, criterion, optimizer, config['training']['epochs'], logger, device)
+    # Construct writer
+    # TODO - replace with our custom Logger class? Would need to modify each model files, not to much work
+    writer = SummaryWriter(
+        config["logging"]["path"],
+    )
 
-    # save the model parameters:
-    final_parameter_save_path = logger.get_parameter_save_path()
-    torch.save(model.state_dict(), final_parameter_save_path)
+    # Instantiate training loop
+    #   Pass training arguments from config file to the model's `train` module
+    #   Pass writer
+    model_interface.train_func(
+        training_args,
+        writer,
+        data_loader,
+        device,
+    )
 
-    logger.close()
-
-    # TODO enforce that the user has all the requirements in requirements.txt
-    # TODO add support for loading model parameters, for either continued training in the case of a break, or for evaluation.
+    writer.close()
