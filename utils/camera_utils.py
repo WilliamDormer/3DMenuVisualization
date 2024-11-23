@@ -19,10 +19,15 @@ WARNED = False
 def loadCam(args, id, cam_info, resolution_scale):
     orig_w, orig_h = cam_info.image.size
 
-    if args.resolution in [1, 2, 4, 8]:
-        resolution = round(orig_w/(resolution_scale * args.resolution)), round(orig_h/(resolution_scale * args.resolution))
+    # if args.resolution in [1, 2, 4, 8]:
+    #     resolution = round(orig_w/(resolution_scale * args.resolution)), round(orig_h/(resolution_scale * args.resolution))
+    if args.resolution in [1, 2, 4, 8, "1", "2", "4", "8"]: # incorrect string types get passed here, needed to modify to check them, then convert.
+        argres = int(args.resolution)
+        resolution = round(orig_w/(resolution_scale * argres)), round(orig_h/(resolution_scale * argres))
     else:  # should be a type that converts to float
-        if args.resolution == -1:
+        print("args.resolution: ", args.resolution)
+        print("type(args.resolution): ", type(args.resolution))
+        if args.resolution == -1 or args.resolution == "-1":
             if orig_w > 1600:
                 global WARNED
                 if not WARNED:

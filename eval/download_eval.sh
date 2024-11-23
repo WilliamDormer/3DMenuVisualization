@@ -50,6 +50,7 @@ find_scene_in_paths() {
 
 # List of required scenes
 SCENE_LIST=(drjohnson playroom bicycle bonsai counter flowers garden kitchen room stump treehill chair drums ficus hotdog lego materials mic ship train truck)
+# SCENE_LIST=(train truck)
 
 # Check that all required scenes can be found
 MISSING_SCENES=()

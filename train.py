@@ -11,13 +11,13 @@
 
 import torch
 import os
-import hydra
+import hydra # command line argument processing tool
 
 from omegaconf import DictConfig, OmegaConf
 from tqdm import tqdm
 from copy import deepcopy
-from lpipsPyTorch import lpips
-from random import randint
+from lpipsPyTorch import lpips # similarity metric
+from random import randint 
 
 from gaussian_renderer import render, network_gui
 from scene import Scene, GaussianModel
