@@ -16,10 +16,10 @@ os.path.dirname(os.path.abspath(__file__))
 
 setup(
     name="diff_gaussian_rasterization_3dgs",
-    packages=['diff_gaussian_rasterization'],
+    packages=['diff_gaussian_rasterization_3dgs'],
     ext_modules=[
         CUDAExtension(
-            name="diff_gaussian_rasterization._C",
+            name="diff_gaussian_rasterization_3dgs._C",
             sources=[
             "cuda_rasterizer/rasterizer_impl.cu",
             "cuda_rasterizer/forward.cu",

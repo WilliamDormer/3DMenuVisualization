@@ -1,1 +1,1 @@
-diff_gaussian_rasterization
+diff_gaussian_rasterization_sogg
