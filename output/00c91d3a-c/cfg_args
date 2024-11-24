@@ -1,1 +1,0 @@
-Namespace(sh_degree=3, source_path='/w/284/kappa/projects/3DMenuVisualization/data/tandt/train', model_path='./output/00c91d3a-c', images='images', depths='', resolution=-1, white_background=False, train_test_exp=False, data_device='cuda', eval=False)
