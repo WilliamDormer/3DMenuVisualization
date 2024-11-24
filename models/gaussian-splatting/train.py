@@ -29,13 +29,13 @@ except ImportError:
     TENSORBOARD_FOUND = False
 
 try:
-    from fused_ssim import fused_ssim
+    from fused_ssim_3dgs import fused_ssim
     FUSED_SSIM_AVAILABLE = True
 except:
     FUSED_SSIM_AVAILABLE = False
 
 try:
-    from diff_gaussian_rasterization import SparseGaussianAdam
+    from diff_gaussian_rasterization_3dgs import SparseGaussianAdam
     SPARSE_ADAM_AVAILABLE = True
 except:
     SPARSE_ADAM_AVAILABLE = False
