@@ -1,0 +1,231 @@
+_wandb:
+    value:
+        cli_version: 0.18.7
+        m: []
+        python_version: 3.11.9
+        t:
+            "1":
+                - 1
+                - 41
+                - 50
+                - 55
+                - 79
+            "2":
+                - 1
+                - 41
+                - 50
+                - 55
+                - 79
+            "3":
+                - 13
+                - 16
+                - 23
+                - 55
+            "4": 3.11.9
+            "5": 0.18.7
+            "8":
+                - 5
+            "12": 0.18.7
+            "13": linux-x86_64
+compression:
+    value:
+        experiments:
+            - attributes:
+                - contract: false
+                  method: exr
+                  name: _xyz
+                  normalize: false
+                  params:
+                    compression: zip
+                  quantize: 13
+                - method: jpeg-xl
+                  name: _features_dc
+                  normalize: true
+                  params:
+                    level: 90
+                - method: jpeg-xl
+                  name: _features_rest
+                  normalize: true
+                  params:
+                    level: 101
+                  quantize: 5
+                - contract: false
+                  method: exr
+                  name: _scaling
+                  normalize: false
+                  params:
+                    compression: none
+                  quantize: 6
+                - method: exr
+                  name: _rotation
+                  normalize: false
+                  params:
+                    compression: zip
+                  quantize: 6
+                - contract: false
+                  method: exr
+                  name: _opacity
+                  normalize: true
+                  params:
+                    compression: none
+                  quantize: 5
+              name: exr_jxl_quant_5_norm
+            - attributes:
+                - method: jpeg-xl
+                  name: _xyz
+                  normalize: true
+                  params:
+                    level: 101
+                  quantize: 14
+                - method: jpeg-xl
+                  name: _features_dc
+                  normalize: true
+                  params:
+                    level: 100
+                - method: jpeg-xl
+                  name: _features_rest
+                  normalize: true
+                  params:
+                    level: 101
+                  quantize: 5
+                - contract: false
+                  method: jpeg-xl
+                  name: _scaling
+                  normalize: false
+                  params:
+                    level: 101
+                  quantize: 6
+                - method: jpeg-xl
+                  name: _rotation
+                  normalize: true
+                  params:
+                    level: 101
+                  quantize: 6
+                - contract: false
+                  method: jpeg-xl
+                  name: _opacity
+                  normalize: true
+                  params:
+                    level: 101
+                  quantize: 6
+              name: jxl_quant_sh
+dataset:
+    value:
+        data_device: cuda
+        eval: true
+        images: images
+        model_path: ""
+        resolution: -1
+        sh_degree: 3
+        source_path: ../../data/tandt/truck/
+        white_background: false
+debug:
+    value:
+        debug_from: -1
+        detect_anomaly: false
+gui_server:
+    value:
+        ip: 127.0.0.1
+        port: 6009
+local_window_debug_view:
+    value:
+        enabled: false
+        interval: 10
+        view_id: 100
+neighbor_loss:
+    value:
+        activated: false
+        blur:
+            kernel_size: 5
+            sigma: 3
+        lambda_neighbor: 1
+        loss_fn: huber
+        normalize: false
+        weights:
+            features_dc: 0
+            features_rest: 0
+            opacity: 1
+            rotation: 10
+            scaling: 0
+            xyz: 0
+optimization:
+    value:
+        densification_interval: 1000
+        densify_from_iter: 500
+        densify_grad_threshold: 7e-05
+        densify_min_opacity: 0.1
+        densify_until_iter: 15000
+        feature_lr: 0.0025
+        iterations: 30000
+        lambda_dssim: 0.2
+        opacity_lr: 0.05
+        opacity_reset_interval: 10000000
+        percent_dense: 0.1
+        position_lr_delay_mult: 0.01
+        position_lr_final: 1.6e-06
+        position_lr_init: 0.00016
+        position_lr_max_steps: 30000
+        random_background: false
+        rotation_lr: 0.001
+        scaling_lr: 0.005
+pipeline:
+    value:
+        compute_cov3D_python: false
+        convert_SHs_python: false
+        debug: false
+run:
+    value:
+        checkpoint_iterations: []
+        compress_iterations:
+            - 7000
+            - 10000
+            - 20000
+            - 30000
+        group: rank_sum_choices
+        log_nb_loss_interval: 100
+        log_training_report_interval: 500
+        name: run
+        no_progress_bar: false
+        quiet: false
+        save_iterations:
+            - 7000
+            - 10000
+            - 20000
+            - 30000
+        start_checkpoint: null
+        tags: ""
+        test_iterations:
+            - 1000
+            - 2000
+            - 5000
+            - 7000
+            - 10000
+            - 12000
+            - 15000
+            - 17000
+            - 20000
+            - 25000
+            - 30000
+        test_lpips: false
+        use_sh: true
+        wandb_url: null
+sorting:
+    value:
+        activated: true
+        enabled: true
+        improvement_break: 0.0001
+        normalize: true
+        shuffle: true
+        weights:
+            features_dc: 1
+            features_rest: 0
+            opacity: 0
+            rotation: 0
+            scaling: 1
+            xyz: 1
+wandb_debug_view:
+    value:
+        interval: 500
+        save_hist: false
+        view_enabled: false
+        view_id: 100

@@ -21,12 +21,11 @@ def init_wandb(cfg):
 
     if os.path.exists("/mnt/output"):
         wandb_dir = "/mnt/output/wandb_out"
-        os.makedirs(wandb_dir, exist_ok=True)
     else:
         wandb_dir = "wandb_out"
+    os.makedirs(wandb_dir, exist_ok=True)
 
     config_dict = OmegaConf.to_container(cfg, resolve=True)
-
 
     run = wandb.init(
         project="ssgs",
