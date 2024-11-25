@@ -27,5 +27,8 @@ This script orchestrates the training process. It loads models, datasets and hyp
 `evaluate.py`
 This script can be used to evaluate a trained model on validation or test data.
 
+`video_to_images.py`
+FFmpeg script we wrote to enable converting custom videos into input images for the models.
+
 `requirements.txt`
 List all dependencies here, making the project easy to install and run on different environments. Refer to [https://docs.python.org/3/tutorial/venv.html](https://docs.python.org/3/tutorial/venv.html) for details.
