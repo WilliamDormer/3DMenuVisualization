@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='plas_sogg',
+    name='plas',
     version='0.1',
     packages=find_packages(),
     install_requires=[
