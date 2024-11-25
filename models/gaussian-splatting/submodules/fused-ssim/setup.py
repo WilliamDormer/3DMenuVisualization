@@ -2,7 +2,7 @@ from setuptools import setup
 from torch.utils.cpp_extension import CUDAExtension, BuildExtension
 
 setup(
-    name="fused_ssim_3dgs",
+    name="fused_ssim",
     packages=['fused_ssim'],
     ext_modules=[
         CUDAExtension(

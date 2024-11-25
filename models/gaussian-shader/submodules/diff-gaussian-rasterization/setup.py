@@ -19,7 +19,7 @@ setup(
     packages=['diff_gaussian_rasterization_gshader'],
     ext_modules=[
         CUDAExtension(
-            name="diff_gaussian_rasterization_shader._C",
+            name="diff_gaussian_rasterization_gshader._C",
             sources=[
             "cuda_rasterizer/rasterizer_impl.cu",
             "cuda_rasterizer/forward.cu",

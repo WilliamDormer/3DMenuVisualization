@@ -22,7 +22,7 @@ setup(
     name="simple_knn_gshader",
     ext_modules=[
         CUDAExtension(
-            name="simple_knng_gshader._C",
+            name="simple_knn_gshader._C",
             sources=[
             "spatial.cu",
             "simple_knn.cu",
