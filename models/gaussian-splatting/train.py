@@ -47,12 +47,6 @@ except:
 
 def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoint_iterations, checkpoint, debug_from):
 
-    wandb.log({
-        'dataset': dataset,
-        'optimization': opt,
-        'pipeline': pipe,
-    })
-
     if not SPARSE_ADAM_AVAILABLE and opt.optimizer_type == "sparse_adam":
         sys.exit(f"Trying to use sparse adam but it is not installed, please install the correct rasterizer using pip install [3dgs_accel].")
 
@@ -229,7 +223,7 @@ def training_report(tb_writer, iteration, Ll1, loss, l1_loss, elapsed, testing_i
         tb_writer.add_scalar('iter_time', elapsed, iteration)
 
     wandb.log({
-        'iteration': iteration, 
+        'iteration': iteration,
         'train_loss_patches/l1_loss': Ll1.item(),
         'train_loss_patches/total_loss': loss.item(),
         'iter_time': elapsed,
@@ -284,6 +278,8 @@ def training_report(tb_writer, iteration, Ll1, loss, l1_loss, elapsed, testing_i
         torch.cuda.empty_cache()
 
 if __name__ == "__main__":
+    import time
+
     # Set up command line argument parser
     parser = ArgumentParser(description="Training script parameters")
     lp = ModelParams(parser)
@@ -321,7 +317,10 @@ if __name__ == "__main__":
         # ...
     )
 
+    start = time.time()
     training(lp.extract(args), op.extract(args), pp.extract(args), args.test_iterations, args.save_iterations, args.checkpoint_iterations, args.start_checkpoint, args.debug_from)
+    end = time.time()
 
+    wandb.log({'total_run_time': end - start})
     # All done
     print("\nTraining complete.")
