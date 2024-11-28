@@ -1,0 +1,110 @@
+antlr4-python3-runtime==4.9.3
+Brotli @ file:///home/conda/feedstock_root/build_artifacts/brotli-split_1725267488082/work
+build @ file:///home/conda/feedstock_root/build_artifacts/python-build_1728263384570/work
+CacheControl @ file:///home/conda/feedstock_root/build_artifacts/cachecontrol-split_1730805028284/work
+certifi @ file:///home/conda/feedstock_root/build_artifacts/certifi_1725278078093/work/certifi
+cffi @ file:///home/conda/feedstock_root/build_artifacts/cffi_1725560564262/work
+charset-normalizer @ file:///home/conda/feedstock_root/build_artifacts/charset-normalizer_1728479282467/work
+cleo @ file:///home/conda/feedstock_root/build_artifacts/cleo_1732012286593/work
+click @ file:///home/conda/feedstock_root/build_artifacts/click_1692311806742/work
+colorama @ file:///home/conda/feedstock_root/build_artifacts/colorama_1666700638685/work
+contourpy==1.3.1
+crashtest @ file:///home/conda/feedstock_root/build_artifacts/crashtest_1667467006729/work
+cryptography @ file:///home/conda/feedstock_root/build_artifacts/cryptography-split_1729286679355/work
+cycler==0.12.1
+diff_gaussian_rasterization_3dgs @ file:///w/284/kappa/projects/3DMenuVisualization/models/gaussian-splatting/submodules/diff-gaussian-rasterization
+diff_gaussian_rasterization_fsgs @ file:///w/284/kappa/projects/3DMenuVisualization/models/few-shot-gaussian-splatting/submodules/diff-gaussian-rasterization-confidence
+diff_gaussian_rasterization_gshader @ file:///w/284/kappa/projects/3DMenuVisualization/models/gaussian-shader/submodules/diff-gaussian-rasterization
+diff_gaussian_rasterization_sogs @ file:///w/284/kappa/projects/3DMenuVisualization/models/self-organizing-gaussians/submodules/diff-gaussian-rasterization
+distlib @ file:///home/conda/feedstock_root/build_artifacts/distlib_1728557174656/work
+docker-pycreds==0.4.0
+dulwich @ file:///home/conda/feedstock_root/build_artifacts/dulwich_1728583243374/work
+fastjsonschema @ file:///home/conda/feedstock_root/build_artifacts/python-fastjsonschema_1718477020893/work/dist
+filelock @ file:///home/conda/feedstock_root/build_artifacts/filelock_1726613473834/work
+fonttools==4.55.0
+fsspec==2024.10.0
+fused_ssim @ file:///w/284/kappa/projects/3DMenuVisualization/models/gaussian-splatting/submodules/fused-ssim
+gitdb==4.0.11
+GitPython==3.1.43
+gmpy2 @ file:///home/conda/feedstock_root/build_artifacts/gmpy2_1725379831219/work
+h2 @ file:///home/conda/feedstock_root/build_artifacts/h2_1634280454336/work
+hpack==4.0.0
+hydra-core==1.3.2
+hyperframe @ file:///home/conda/feedstock_root/build_artifacts/hyperframe_1619110129307/work
+idna @ file:///home/conda/feedstock_root/build_artifacts/idna_1726459485162/work
+imagecodecs==2024.9.22
+importlib_metadata @ file:///home/conda/feedstock_root/build_artifacts/importlib-metadata_1726082825846/work
+importlib_resources @ file:///home/conda/feedstock_root/build_artifacts/importlib_resources_1725921340658/work
+installer @ file:///home/conda/feedstock_root/build_artifacts/python-installer_1679300325491/work
+jaraco.classes @ file:///home/conda/feedstock_root/build_artifacts/jaraco.classes_1713939306738/work
+jeepney @ file:///home/conda/feedstock_root/build_artifacts/jeepney_1649085214306/work
+Jinja2 @ file:///home/conda/feedstock_root/build_artifacts/jinja2_1715127149914/work
+joblib==1.4.2
+keyring @ file:///home/conda/feedstock_root/build_artifacts/keyring_1728574826145/work
+kiwisolver==1.4.7
+kornia @ file:///home/conda/feedstock_root/build_artifacts/kornia_1708449662690/work
+kornia_rs==0.1.7
+lapx==0.5.11
+MarkupSafe @ file:///home/conda/feedstock_root/build_artifacts/markupsafe_1729351299924/work
+matplotlib==3.9.2
+more-itertools @ file:///home/conda/feedstock_root/build_artifacts/more-itertools_1725630081114/work
+mpmath @ file:///home/conda/feedstock_root/build_artifacts/mpmath_1678228039184/work
+msgpack @ file:///home/conda/feedstock_root/build_artifacts/msgpack-python_1725974992554/work
+networkx @ file:///home/conda/feedstock_root/build_artifacts/bld/rattler-build_networkx_1731521053/work
+numcodecs==0.14.1
+numpy @ file:///home/conda/feedstock_root/build_artifacts/numpy_1730588022105/work/dist/numpy-2.1.3-cp311-cp311-linux_x86_64.whl#sha256=1f5924614bd9bbde9f19a84deaf511e80e6a1225443be24354a5ca153876529c
+omegaconf==2.3.0
+opencv-python==4.10.0.84
+packaging @ file:///home/conda/feedstock_root/build_artifacts/packaging_1731802491770/work
+pandas @ file:///home/conda/feedstock_root/build_artifacts/pandas_1726878443020/work
+pexpect @ file:///home/conda/feedstock_root/build_artifacts/pexpect_1706113125309/work
+Pillow @ file:///home/conda/feedstock_root/build_artifacts/pillow_1675487189013/work
+pkginfo @ file:///home/conda/feedstock_root/build_artifacts/pkginfo_1728616516923/work
+plas @ file:///w/284/kappa/projects/3DMenuVisualization/models/self-organizing-gaussians/submodules/PLAS
+platformdirs @ file:///home/conda/feedstock_root/build_artifacts/platformdirs_1726613481435/work
+plyfile==1.1
+poetry @ file:///home/conda/feedstock_root/build_artifacts/poetry_1728951551567/work
+poetry-core @ file:///home/conda/feedstock_root/build_artifacts/poetry-core_1728873002994/work
+poetry-plugin-export @ file:///home/conda/feedstock_root/build_artifacts/poetry-plugin-export_1715458131259/work
+protobuf==5.28.3
+psutil==6.1.0
+ptyprocess @ file:///home/conda/feedstock_root/build_artifacts/ptyprocess_1609419310487/work/dist/ptyprocess-0.7.0-py2.py3-none-any.whl
+pycparser @ file:///home/conda/feedstock_root/build_artifacts/pycparser_1711811537435/work
+pyparsing==3.2.0
+pyproject_hooks @ file:///home/conda/feedstock_root/build_artifacts/pyproject_hooks_1727644064167/work
+PySocks @ file:///home/conda/feedstock_root/build_artifacts/pysocks_1661604839144/work
+python-dateutil @ file:///home/conda/feedstock_root/build_artifacts/python-dateutil_1731919281354/work
+pytz @ file:///home/conda/feedstock_root/build_artifacts/pytz_1706886791323/work
+PyYAML @ file:///home/conda/feedstock_root/build_artifacts/pyyaml_1725456139051/work
+requests @ file:///home/conda/feedstock_root/build_artifacts/requests_1717057054362/work
+requests-toolbelt @ file:///home/conda/feedstock_root/build_artifacts/requests-toolbelt_1682953341151/work
+scipy==1.14.1
+screeninfo @ file:///home/conda/feedstock_root/build_artifacts/screeninfo_1715463892034/work
+SecretStorage @ file:///home/conda/feedstock_root/build_artifacts/secretstorage_1725915607380/work
+sentry-sdk==2.19.0
+setproctitle==1.3.4
+shellingham @ file:///home/conda/feedstock_root/build_artifacts/shellingham_1698144360966/work
+simple_knn_3dgs @ file:///w/284/kappa/projects/3DMenuVisualization/models/gaussian-splatting/submodules/simple-knn
+simple_knn_fsgs @ file:///w/284/kappa/projects/3DMenuVisualization/models/few-shot-gaussian-splatting/submodules/simple-knn
+simple_knn_gshader @ file:///w/284/kappa/projects/3DMenuVisualization/models/gaussian-shader/submodules/simple-knn
+simple_knn_sogs @ file:///w/284/kappa/projects/3DMenuVisualization/models/self-organizing-gaussians/submodules/simple-knn
+six @ file:///home/conda/feedstock_root/build_artifacts/six_1620240208055/work
+smmap==5.0.1
+sympy==1.13.1
+tifffile==2024.9.20
+tomli @ file:///home/conda/feedstock_root/build_artifacts/tomli_1731426768275/work
+tomlkit @ file:///home/conda/feedstock_root/build_artifacts/tomlkit_1723631480657/work
+torch==2.5.1
+torchaudio==2.5.1
+torchvision==0.20.1
+tqdm==4.67.0
+trimesh==4.5.2
+triton==3.1.0
+trove-classifiers @ file:///home/conda/feedstock_root/build_artifacts/trove-classifiers_1729551937995/work
+typing_extensions @ file:///home/conda/feedstock_root/build_artifacts/typing_extensions_1717802530399/work
+tzdata @ file:///home/conda/feedstock_root/build_artifacts/python-tzdata_1727140567071/work
+urllib3 @ file:///home/conda/feedstock_root/build_artifacts/urllib3_1726496430923/work
+virtualenv @ file:///home/conda/feedstock_root/build_artifacts/virtualenv_1730204812392/work
+wandb==0.18.7
+zipp @ file:///home/conda/feedstock_root/build_artifacts/zipp_1731262100163/work
+zstandard==0.23.0

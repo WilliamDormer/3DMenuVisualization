@@ -1,0 +1,15 @@
+name: 3Dmenu
+channels:
+- conda-forge
+- pytorch
+dependencies:
+- click
+- gh
+- kornia
+- pandas
+- pytorch
+- pytorch-cuda=12.4
+- screeninfo
+- torchaudio
+- torchvision
+
