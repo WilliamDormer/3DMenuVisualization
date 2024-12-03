@@ -2,6 +2,19 @@
 
 This project aims to produce a deep learning model capable of quickly providing high-quality, interactive 3D menu items.
 
+## TODO
+
+- [ ] Move `video_to_images.py` scipt a `scripts/` folder; consider wrapping with `torch` DataLoader (https://pytorch.org/vision/stable/generated/torchvision.datasets.DatasetFolder.html#torchvision.datasets.DatasetFolder)
+- [ ] Test 'one-click' environment setup in fresh folder on CSLab and Windows device
+- [ ] Test if SingularityCE is viable (CSLab does not support Docker); maybe also try creating a Linux Docker image
+- [ ] Check that all models have appropriate experiment tracking/logging using wandb (or optionally Tensorboard?)
+- [ ] Try creating a 'main entry point' `train.py` script that takes some configuration values and runs an end-to-end pipeline for a user-specified dataset and model
+- [ ] Update installation docs to include a troubleshooting section, update architecture docs to include description of parameters
+
+## Usage
+
+...
+
 ## Folder Structure 
 
 `data/`
