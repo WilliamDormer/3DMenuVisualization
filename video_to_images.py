@@ -13,8 +13,9 @@ import cv2
 import argparse
 import shutil
 from pathlib import Path
+from typing import Optional
 
-def extract_frames(video_path: Path, output_dir: Path, num_frames: int, resolution: tuple[int, int] = None) -> None:
+def extract_frames(video_path: Path, output_dir: Path, num_frames: int, resolution: Optional[tuple[int, int]] = None) -> None:
     """
     Extracts a specified number of frames from a video, optionally scaling them.
 
