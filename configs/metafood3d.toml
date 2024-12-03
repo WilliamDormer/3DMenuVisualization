@@ -1,0 +1,17 @@
+[benchmark]
+name = "Baseline"
+
+[models]
+models = {
+    "few-shot-gaussian-splatting",
+    "gaussian-shader",
+    "gaussian-splatting",
+    "self-organizing-gaussians",
+}
+
+[data]
+path = "data/metafood3d"
+
+[training]
+eval = true
+iterations = [10000, 30000]

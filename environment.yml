@@ -1,14 +1,50 @@
-name: 3Dmenu
+# environment.yml
+name: testmenu
 channels:
-- conda-forge
 - pytorch
+- conda-forge
+- defaults
 dependencies:
-- click
-- gh
-- kornia
-- pandas
+# Python
+- python=3.10
+- pip=24.3.*
+# ML/DL
 - pytorch
 - pytorch-cuda=12.4
-- screeninfo
 - torchaudio
+- torchmetrics
 - torchvision
+- kornia
+# Data science
+- matplotlib
+- scipy
+- pandas
+# Data processing
+- plyfile
+# Utility
+- hydra-core
+- screeninfo
+- tqdm
+- pip:
+  # Computer vision & Image processing
+  - timm
+  - opencv-python
+  - imagecodecs[all]
+  - imageio
+  - open3d
+  # Data pipeline management
+  - joblib
+  # Experiment tracking
+  - wandb
+  - torchmetrics
+  # Custom/Local packages
+  - models/gaussian-splatting/submodules/diff-gaussian-rasterization
+  - models/gaussian-splatting/submodules/fused-ssim
+  - models/gaussian-splatting/submodules/simple-knn
+  - models/self-organizing-gaussians/submodules/diff-gaussian-rasterization
+  - models/self-organizing-gaussians/submodules/simple-knn
+  - models/self-organizing-gaussians/submodules/PLAS
+  - models/few-shot-gaussian-splatting/submodules/diff-gaussian-rasterization-confidence
+  - models/few-shot-gaussian-splatting/submodules/simple-knn	
+  - models/gaussian-shader/submodules/diff-gaussian-rasterization
+  - models/gaussian-shader/submodules/simple-knn
