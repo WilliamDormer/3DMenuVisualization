@@ -1,20 +1,78 @@
 # 3D Menu Visualization
 
-This project aims to produce a deep learning model capable of quickly providing high-quality, interactive 3D menu items.
+This project aims to compare Gaussian Splatting models capable of quickly providing high-quality, interactive renders of 3D menu items.
 
-## TODO
+## Contributions
 
-- [ ] Move `video_to_images.py` scipt a `scripts/` folder; consider wrapping with `torch` DataLoader (https://pytorch.org/vision/stable/generated/torchvision.datasets.DatasetFolder.html#torchvision.datasets.DatasetFolder)
-- [ ] Test 'one-click' environment setup in fresh folder on CSLab and Windows device
-- [ ] Check that all models have appropriate experiment tracking/logging using wandb (or optionally Tensorboard?)
-- [ ] Try creating a 'main entry point' `train.py` script that takes some configuration values and runs an end-to-end pipeline for a user-specified dataset and model
-- [ ] Update installation docs to include a troubleshooting section, update architecture docs to include description of parameters
+In this work, we contribute:
+
+1. Benchmarks of the models on a subset of scenes from the [MetaFood3D dataset](http://arxiv.org/abs/2409.01966)
+2. Bug fixes and new features for a few of the Gaussian Splatting models (such as the capability to export renders to video)
+3. FFmpeg script to enable converting custom videos into input images for the models. ([`video_to_images.py`](./scripts/video_to_images.py))
+4. Documentation for model parameters
+
+## Install
+
+Ensure you run the installation commands on a device with a CUDA-enabled GPU.
+This installation guide assumes you are working on a Linux system.
+
+First, clone the repo:
+
+```bash
+git clone https://github.com/WilliamDormer/3DMenuVisualization.git
+cd 3DMenuVisualization
+```
+
+Next, make sure to set the appropriate environment variables for CUDA:
+
+```bash
+CUDA_HOME=/usr/local/cuda
+TORCH_CUDA_ARCH_LIST="7.0 7.5 8.0 8.6+PTX"
+```
+
+> You may need to use different values for `TORCH_CUDA_ARCH_LIST` depending on your system: [CUDA GPUs: Compute Capability (NVIDIA)](https://developer.nvidia.com/cuda-gpus)
+
+Finally, create and activate the conda environment.
+
+```bash
+conda create --prefix ./env -f environment.yml
+```
+
+### Troubleshooting
+
+If you run into errors with setting up the environment or running the models, refer to the [Troubleshooting guide](./docs/TROUBLESHOOTING.md)
+
+### Additional Required Dependencies
+
+We recommend downloading system packages or precompiled binaries where possible.
+
+> If you are on a system with restricted permissions (such as a university computing lab), then it is still possible to download/build external programs from source. Get in touch with your system administration for help.
+
+All models:
+
+- [COLMAP](https://colmap.github.io/install.html) - however note that FSGS uses a dockerized version of COLMAP with run with specific settings. Refer to the [FSGS Readme](https://github.com/VITA-Group/FSGS) for details.
+
+GaussianShader
+
+- [Nvdiffrast](https://nvlabs.github.io/nvdiffrast/)
+
+Few-Shot Gaussian Splatting
+
+- [LLFF](https://github.com/Fyusion/LLFF)
 
 ## Usage
 
-...
+1. Prepare you input data accordingly. Assuming you obtain a video (`.mp4`) of your scene, run the [`scripts/video_to_images.py`](./scripts/video_to_images.py) and save the resulting images to your `data/` folder
+2. `cd` to your model of interest and run the `<model>/train.py` script. Refer to the model READMEs for details of how to pass arguments to the model
+3. Note that the models are setup to log with [Weights & Biases](https://wandb.ai/site/). Create an account if needed. 
 
-## Folder Structure 
+> (Or should we just stick to tensorboard?)
+
+## Parameters
+
+For a list of important parameters and parameter differences between models, refer to the [Parameters guide](./docs/PARAMS.md).
+
+## Folder Structure
 
 `data/`
 this folder contains scripts to load and pre-process datasets. Use dataset_loader.py script to abstract the specifics of loading the different datasets.
@@ -22,25 +80,22 @@ this folder contains scripts to load and pre-process datasets. Use dataset_loade
 `models/`
 Each model should be defined in a separate file for clarity and modularity. You can include multiple models in this folder.
 
-`configs/`
-use a YAML file to store hyperparameters and other configurations. This makes it easy to tweak and manage different experiments
+<!-- `configs/`
+use a YAML file to store hyperparameters and other configurations. This makes it easy to tweak and manage different experiments -->
 
 `experiments/`
 for logging and saving results. Each experiment can have it's own folder where you store model checkpoints, logs, and plots. 
     checkpoints: save trained model weights for future evaluation
     logs: store training logs (e.g. loss, accuracy per epoch)
 
-`utils/`
-Utilities such as logging class to track metrics during training, or functions to compute error metrics or evaluation metrics.
+`scripts/`
+Scripts for data preprocessing.
 
-`train.py`
-This script orchestrates the training process. It loads models, datasets and hyperparameters from the config file, and tracks progress using a logging mechanism.
+<!-- `train.py`
+This script orchestrates the training process. It loads models, datasets and hyperparameters from the config file, and tracks progress using a logging mechanism. -->
 
-`evaluate.py`
-This script can be used to evaluate a trained model on validation or test data.
+<!-- `evaluate.py`
+This script can be used to evaluate a trained model on validation or test data. -->
 
-`video_to_images.py`
-FFmpeg script we wrote to enable converting custom videos into input images for the models.
-
-`requirements.txt`
-List all dependencies here, making the project easy to install and run on different environments. Refer to [https://docs.python.org/3/tutorial/venv.html](https://docs.python.org/3/tutorial/venv.html) for details.
+`environment.yml`
+List all dependencies here, making the project easy to install and run on different environments.
