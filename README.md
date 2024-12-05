@@ -6,11 +6,18 @@ This project aims to compare Gaussian Splatting models capable of quickly provid
 
 In this work, we contribute:
 
-1. Benchmarks of the models on a subset of scenes from the [MetaFood3D dataset](http://arxiv.org/abs/2409.01966). Refer to [Benchmarks](./docs/BENCHMARKS.md) for details.
+1. Benchmarks of four Gaussian Splatting models on a subset of scenes from the [MetaFood3D dataset](http://arxiv.org/abs/2409.01966). Refer to [Benchmarks](./docs/BENCHMARKS.md) for details.
 2. Bug fixes and new features for a few of the Gaussian Splatting models (such as the capability to export renders to video)
 3. [DormerFood](/), a custom dataset to test realistic edge cases in 3D food rendering
 3. FFmpeg script to enable converting custom videos into input images for the models. ([`video_to_images.py`](./scripts/video_to_images.py))
 4. Documentation for model parameters
+
+We compared the following models:
+
+1. [Gaussian Splatting](https://github.com/graphdeco-inria/gaussian-splatting)
+2. [Self-Organizing Gaussian Grids](https://github.com/fraunhoferhhi/Self-Organizing-Gaussians/tree/main)
+3. [GaussianShader](https://github.com/Asparagus15/GaussianShader)
+4. [Few-Shot Gaussian Splatting](https://github.com/VITA-Group/FSGS)
 
 ## Install
 

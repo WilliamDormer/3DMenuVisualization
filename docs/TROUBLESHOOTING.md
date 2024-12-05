@@ -72,3 +72,24 @@ Yet the submodules expect the `CUDA_HOME` variable to be set, so make sure it's 
 We ran into issues when using `cudatoolkit` (version 11), `pytorch` (version 1) and earlier versions of `python` (3.8) as indicated in the original model repositories.
 
 The error went away when we upgraded to `python3.10` and `pytorch` (version 2) and `pytorch-cuda` (version 12.4)
+
+
+## FSGS Simple-KNN Compilation Error
+
+This is issue is resolved in our repo, but note that if you choose to download and use the original FSGS implementation you may run into a compilation error when installing the `submodules/simple-knn` issue:
+
+```bash
+nvcc warning : incompatible redefinition for option 'compiler-bindir', the last value of this option was used
+      simple_knn.cu:23: warning: "__CUDACC__" redefined
+         23 | #define __CUDACC__
+            |
+      <command-line>: note: this is the location of the previous definition
+      simple_knn.cu(90): error: identifier "FLT_MAX" is undefined
+          me.minn = { FLT_MAX, FLT_MAX, FLT_MAX };
+                      ^
+      
+      simple_knn.cu(157): error: identifier "FLT_MAX" is undefined
+         float best[3] = { FLT_MAX, FLT_MAX, FLT_MAX };
+```
+
+To resolve it, add the line `include <float.h>` to the `FSGS/submodule/simple-knn/simple_knn.cu` file
