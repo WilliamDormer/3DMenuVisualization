@@ -4,7 +4,6 @@ Module for running benchmarks
 """
 
 import argparse
-import tomllib
 
 def main() -> None:
     parser = argparse.ArgumentParser()

@@ -25,6 +25,7 @@ dependencies:
 - hydra-core
 - screeninfo
 - tqdm
+- ffmpeg
 - pip:
   # Computer vision & Image processing
   - timm
@@ -32,6 +33,8 @@ dependencies:
   - imagecodecs[all]
   - imageio
   - open3d
+  - libs/nvdiffrast # Needed to clone from GitHub (https://nvlabs.github.io/nvdiffrast/)
+  - tensorboard
   # Data pipeline management
   - joblib
   # Experiment tracking
