@@ -21,9 +21,16 @@
 #include <thrust/device_vector.h>
 #include <thrust/sequence.h>
 #include <float.h>
-#define __CUDACC__
+#define __CUDACC__ /* TODO: Test using the conditional compilation */
 #include <cooperative_groups.h>
 #include <cooperative_groups/reduce.h>
+
+/* 
+#ifdef CUDACC
+#else
+    #define CUDACC
+#endif
+*/
 
 namespace cg = cooperative_groups;
 

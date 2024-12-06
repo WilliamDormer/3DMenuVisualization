@@ -93,3 +93,31 @@ nvcc warning : incompatible redefinition for option 'compiler-bindir', the last 
 ```
 
 To resolve it, add the line `include <float.h>` to the `FSGS/submodule/simple-knn/simple_knn.cu` file
+
+## MSVC Errors
+
+On Windows, if you get Microsoft Visual C++ errors, ensure you have MSVC in your PATH environment variable.
+Refer to the [Visual Studio C/C++](https://visualstudio.microsoft.com/vs/features/cplusplus/) documentation for details 
+
+
+## Distutils Error
+
+It's giving an error about `ModuleNotFound: No module named 'distutils.msvccomplier"`.
+It looks like distutils is deprecated and so you need to use setuptools as a replacement. But it looks
+like if you have `python3.10` or earlier, you can still use it but you need to install it explicitly?
+
+Try:
+
+`micromamba install setuptools <65` (or `conda install`)
+
+The error likely occurs because setup tools contains some backwards compatibility issues with distutils up to that version.
+
+## `OPENCV_IO_ENABLE_OPEN` environment variable
+
+If the Self-Organizing Gaussian Grids training script breaks, you may need: 
+
+```bash
+OPENCV_IO_ENABLE_OPENEXR=1 python train.py   --config-name ours_q_sh_local_test   hydra.run.dir=./data/output/2024-11-16/run   dataset.source_path=./data/gaussian_splatting/tandt/truck   run.no_progress_bar=false   run.name=vs-code-debug
+```
+
+## 

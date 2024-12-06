@@ -74,6 +74,8 @@ Few-Shot Gaussian Splatting
 
 1. Prepare you input data accordingly. Assuming you obtain a video (`.mp4`) of your scene, run the [`scripts/video_to_images.py`](./scripts/video_to_images.py) and save the resulting images to your `data/` folder
 2. `cd` to your model of interest and run the `<model>/train.py` script. Refer to the model READMEs for details of how to pass arguments to the model
+
+    - Note that evaluation of the models requires running multiple separate scripts (`train.py`, `render.py`, followed by `metrics.py`). Refer to [this section](https://github.com/WilliamDormer/3DMenuVisualization/tree/main/models/gaussian-splatting#evaluation) for details.
 3. Note that the models are setup to log with [Weights & Biases](https://wandb.ai/site/). Create an account if needed. 
 
 > (Or should we just stick to tensorboard?)
