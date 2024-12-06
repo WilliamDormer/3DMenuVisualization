@@ -46,6 +46,8 @@ Finally, create and activate the conda environment.
 conda create --prefix ./env -f environment.yml
 ```
 
+> Note that this `environment.yml` contains updated dependencies compared to the original implementations. The environment files supplied by the original papers were insufficient to replicate their environments.
+
 ### Troubleshooting
 
 If you run into errors with setting up the environment or running the models, refer to the [Troubleshooting guide](./docs/TROUBLESHOOTING.md)
