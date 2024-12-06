@@ -119,5 +119,3 @@ If the Self-Organizing Gaussian Grids training script breaks, you may need:
 ```bash
 OPENCV_IO_ENABLE_OPENEXR=1 python train.py   --config-name ours_q_sh_local_test   hydra.run.dir=./data/output/2024-11-16/run   dataset.source_path=./data/gaussian_splatting/tandt/truck   run.no_progress_bar=false   run.name=vs-code-debug
 ```
-
-## 

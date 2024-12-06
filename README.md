@@ -8,7 +8,7 @@ In this work, we contribute:
 
 1. Benchmarks of four Gaussian Splatting models on a subset of scenes from the [MetaFood3D dataset](http://arxiv.org/abs/2409.01966). Refer to [Benchmarks](./docs/BENCHMARKS.md) for details.
 2. Bug fixes and new features for a few of the Gaussian Splatting models (such as the capability to export renders to video)
-3. [DormerFood](/), a custom dataset to test realistic edge cases in 3D food rendering
+3. [DormerFood](https://utoronto-my.sharepoint.com/personal/will_dormer_mail_utoronto_ca/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fwill%5Fdormer%5Fmail%5Futoronto%5Fca%2FDocuments%2F3DFoodVisualization%2FDormerFood&ga=1), a custom dataset to test realistic edge cases in 3D food rendering
 3. FFmpeg script to enable converting custom videos into input images for the models. ([`video_to_images.py`](./scripts/video_to_images.py))
 4. Documentation for model parameters
 
@@ -77,8 +77,6 @@ Few-Shot Gaussian Splatting
 
     - Note that evaluation of the models requires running multiple separate scripts (`train.py`, `render.py`, followed by `metrics.py`). Refer to [this section](https://github.com/WilliamDormer/3DMenuVisualization/tree/main/models/gaussian-splatting#evaluation) for details.
 3. Note that the models are setup to log with [Weights & Biases](https://wandb.ai/site/). Create an account if needed. 
-
-> (Or should we just stick to tensorboard?)
 
 ## Parameters
 

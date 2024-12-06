@@ -14,7 +14,7 @@ Performance of Gaussian Splatting models averaged over 5 scenes from the MetaFoo
 ## DormerFood
 
 For our custom dataset, DormerFood, we benchmarked the best performing model, Self-Organizing Gaussians.
-The dataset can be downloaded [here](/):
+The dataset can be downloaded [here](https://utoronto-my.sharepoint.com/personal/will_dormer_mail_utoronto_ca/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fwill%5Fdormer%5Fmail%5Futoronto%5Fca%2FDocuments%2F3DFoodVisualization%2FDormerFood&ga=1):
 
 | Scene              | LPIPS ↓ | SSIM ↑ | PSNR ↑ | Output .ply File Size (MB) | # of Gaussian Splats | # input images | # Colmap reconstructed images | Training Iterations | Train Time |
 |--------------------|---------|--------|--------|----------------------------|----------------------|----------------|-------------------------------|---------------------|------------|
