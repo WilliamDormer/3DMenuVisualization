@@ -85,12 +85,16 @@ For a list of important parameters and parameter differences between models, ref
 `data/`
 this folder contains scripts to load and pre-process datasets. Use dataset_loader.py script to abstract the specifics of loading the different datasets.
 
+`docs/`
+Contains documentation related to benchmarks, troubleshooting, model parameters, etc.
+
 `models/`
 Each model should be defined in a separate file for clarity and modularity. You can include multiple models in this folder.
 
 <!-- `configs/`
 use a YAML file to store hyperparameters and other configurations. This makes it easy to tweak and manage different experiments -->
 
+> TODO: Remove experiments? Or try running things with WANDB or Tensorboard?
 `experiments/`
 for logging and saving results. Each experiment can have it's own folder where you store model checkpoints, logs, and plots. 
     checkpoints: save trained model weights for future evaluation
